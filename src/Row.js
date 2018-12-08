@@ -23,5 +23,4 @@ class Row extends React.Component {
 	}
 }
 
-//export default Content;
 export default CSSModules(Row, style);

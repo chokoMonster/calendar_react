@@ -22,7 +22,7 @@ class Grid extends React.Component {
 		console.log('componentWillReceiveProps');
         if(nextProps.month !== this.props.month || nextProps.year !== this.props.year){
 			console.log('componentWillReceiveProps_2');
-            this.getData(nextProps.month, nextProps.year)
+            this.getData(nextProps.month, nextProps.year);
 			//this.calculateDays(nextProps.month, nextProps.year)
         }
 	}
@@ -30,7 +30,8 @@ class Grid extends React.Component {
 	componentDidMount(){
 		console.log('componentDidMount');
 		if(this.state.days.length==0) {
-        	this.getData(new Date().getMonth(), new Date().getFullYear())
+			//this.getData(new Date().getMonth(), new Date().getFullYear());
+			this.getData(this.state.month, new Date().getFullYear());
 			//this.calculateDays(new Date().getMonth(), new Date().getFullYear())
 		}
     }
@@ -49,6 +50,33 @@ class Grid extends React.Component {
         }).catch(fromReject => {
             console.log("!!!ERROR!!!")
 		})*/
+
+		/*let anfrage;
+		if (window.XMLHttpRequest){
+			// AJAX nutzen mit IE7+, Chrome, Firefox, Safari, Opera
+			anfrage=new XMLHttpRequest();
+		} else {
+			// AJAX mit IE6, IE5
+			anfrage=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+	
+		anfrage.open("GET","C:/Projekte/kurs/javascript/calendar_web/php/getEintraege.php?id="+"gerkat"+"&monat="+(month+1)+"&jahr="+year, true);
+		anfrage.send();
+		
+		anfrage.onreadystatechange=function() {
+			let json_termine = new Array();
+				if(anfrage.readyState==4 && anfrage.status==200) {
+					json_termine = JSON.parse(anfrage.responseText);
+				}
+
+				for (j in json_termine) {
+					json_termine[j].DATUM = new Date(json_termine[j].DATUM);
+					if(json_termine[j].DATUM.getDate()==tagZelle) {
+						termine_relevant[termine_relevant.length] = json_termine[j];
+					}
+				}
+			this.calculateDays(month, year, json_termine);
+		}*/
 		
 		let data = [
 			{
@@ -74,7 +102,7 @@ class Grid extends React.Component {
 			}
 		];
 
-		this.calculateDays(month, year, data)
+		this.calculateDays(month, year, data);
     }
 	
 	render() {
@@ -148,7 +176,9 @@ class Grid extends React.Component {
 		}
 		this.setState({tableData: dataNew,
 						days: dayList,
-						dayData: dayDataList});	
+						dayData: dayDataList,
+						month: month,
+						year: year});	
 	}
 
 	isValidDate(y,m,d) {

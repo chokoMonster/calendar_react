@@ -11,7 +11,7 @@ import Kalender from './Kalender.js';
  
 document.addEventListener('DOMContentLoaded', function() {
 	console.log("hallo");
-	//ReactDOM.render(React.createElement(Timeline), document.getElementById('mount'));	
+	//ReactDOM.render(React.createElement(Kalender), document.getElementById('mount'));	
 	//ReactDOM.render(<Kalender/>, document.getElementById('mount'));
 	
 	ReactDOM.render(<App />, document.getElementById('mount'));
