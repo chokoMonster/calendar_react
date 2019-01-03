@@ -9,7 +9,7 @@ class EntriePopup extends React.Component {
 		return (
             <div className='popup'>
                 <div className='popup_inner'>
-                    <h1>{this.props.entriePopup.LIGA}</h1>
+                    <h1>{eintrag.LIGA}</h1>
                     <button onClick={this.props.closePopup}>Close</button>
                 </div>
             </div>

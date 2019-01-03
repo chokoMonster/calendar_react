@@ -11,12 +11,14 @@ class Row extends React.Component {
 	
 	render() {
 		const days = this.props.days;
+		const month = this.props.month;
+		const year = this.props.year;
 		const entries = this.props.entries;
 
 		return (
 			<tr>
 				{days.map((day) => (
-					<Cell dayCell={day} entriesCell={entries.filter(e => new Date(e.DATUM).getDate()==day)} onSelectedItem={this.onSelectedItem.bind(this)}/>
+					<Cell dayCell={day} month={month} year={year} entriesCell={entries.filter(e => new Date(e.DATUM).getDate()==day)} onSelectedItem={this.onSelectedItem.bind(this)}/>
 				))}
 			</tr>
 		)

@@ -8,9 +8,9 @@ class Grid extends React.Component {
 	constructor(props){
         super(props)
         this.state = {
-			todayDate: new Date(),
             month: (new Date()).getMonth(),
-			year: this.props.year,
+			//year: this.props.year,
+			year: (new Date()).getFullYear(),
 			days: [],
 			dayData: [],
             tableData: [],
@@ -125,9 +125,9 @@ class Grid extends React.Component {
 					<td colspan={7} id='datum_akt'>{this.state.year+', '}</td></tr>*/}
 
 				<tr>
-					<td className='tbl_title'><a className='tbl_move' /*onClick={prevMonth()}*/ >&laquo;</a></td>
+					<td className='tbl_title'><a className='tbl_move' onClick={this.prevMonth.bind(this)} >&laquo;</a></td>
 					<td colSpan={5} className='tbl_title' id='monatName'>{monthNames[this.state.month]}</td>
-					<td className='tbl_title'><a className='tbl_move' /*onClick={nextMonth()}*/> &raquo;</a></td>
+					<td className='tbl_title'><a className='tbl_move' onClick={this.nextMonth.bind(this)} > &raquo;</a></td>
 				</tr>
 				<tr>
 				{wochentage.map((wochentag) => (
@@ -135,7 +135,8 @@ class Grid extends React.Component {
 				))}
 				</tr>
 				{rowCount.map((rowNum) => (
-					<Row days={this.state.days[rowNum]} entries={this.state.dayData[rowNum]} onSelectedItem={this.onSelectedItem.bind(this)}/>
+					<Row days={this.state.days[rowNum]} month={this.state.month} year={this.state.year} 
+						entries={this.state.dayData[rowNum]} onSelectedItem={this.onSelectedItem.bind(this)}/>
 				))}
 			</tbody>
 			</table>
@@ -179,6 +180,32 @@ class Grid extends React.Component {
 						dayData: dayDataList,
 						month: month,
 						year: year});	
+	}
+
+	prevMonth() {
+		let m = this.state.month;
+		let y = this.state.year;
+		//Jahreswechsel?
+		if (m==0) {
+			m = 11;
+			y = y - 1;
+		} else {
+			m = m - 1;
+		}
+		this.getData(m, y);
+	}
+
+	nextMonth() {
+		let m = this.state.month;
+		let y = this.state.year;
+		//Jahreswechsel?
+		if (m==11) {
+			m = 0;
+			y = y + 1;
+		} else {
+			m = m + 1;
+		}
+		this.getData(m, y);
 	}
 
 	isValidDate(y,m,d) {

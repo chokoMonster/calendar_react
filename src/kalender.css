@@ -56,3 +56,18 @@
 	cursor: pointer;
 	color: #000000;
 }
+
+.cell_default {
+	font-weight: normal;
+	background-color: #FFFFFF;
+}
+
+.cell_today {
+	font-weight: bold;
+	background-color: #F5D0A9;
+}
+
+.cell_holiday {
+	font-weight: normal;
+	background-color: #F6CED8;
+}
