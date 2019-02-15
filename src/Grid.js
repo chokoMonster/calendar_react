@@ -30,7 +30,6 @@ class Grid extends React.Component {
 	componentDidMount(){
 		console.log('componentDidMount');
 		if(this.state.days.length==0) {
-			//this.getData(new Date().getMonth(), new Date().getFullYear());
 			this.getData(this.state.month, new Date().getFullYear());
 			//this.calculateDays(new Date().getMonth(), new Date().getFullYear())
 		}
@@ -51,7 +50,7 @@ class Grid extends React.Component {
             console.log("!!!ERROR!!!")
 		})*/
 
-		/*let anfrage;
+		let anfrage;
 		if (window.XMLHttpRequest){
 			// AJAX nutzen mit IE7+, Chrome, Firefox, Safari, Opera
 			anfrage=new XMLHttpRequest();
@@ -59,26 +58,29 @@ class Grid extends React.Component {
 			// AJAX mit IE6, IE5
 			anfrage=new ActiveXObject("Microsoft.XMLHTTP");
 		}
-	
-		anfrage.open("GET","C:/Projekte/kurs/javascript/calendar_web/php/getEintraege.php?id="+"gerkat"+"&monat="+(month+1)+"&jahr="+year, true);
-		anfrage.send();
-		
-		anfrage.onreadystatechange=function() {
-			let json_termine = new Array();
-				if(anfrage.readyState==4 && anfrage.status==200) {
-					json_termine = JSON.parse(anfrage.responseText);
-				}
 
-				for (j in json_termine) {
+		//anfrage.open("GET","C:/Projekte/kurs/javascript/calendar_web/php/getEintraege.php?id="+"gerkat"+"&monat="+(month+1)+"&jahr="+year, true);
+		//anfrage.open("GET","C:/Projekte/kurs/react/php/getEintraege.php?id="+"gerkat"+"&monat="+(month+1)+"&jahr="+year, true);
+		anfrage.open("GET","http://localhost/dbb_php/getEintraege.php?id=gerkat&monat="+(month+1)+"&jahr="+year, true);
+
+		anfrage.send();
+
+		//TODO: besseren Weg finden!
+		let ref = this;
+		//let json_termine = new Array();
+		anfrage.onreadystatechange=function() {
+			if(anfrage.readyState==4 && anfrage.status==200) {
+				let json_termine = new Array();
+				json_termine = JSON.parse(anfrage.responseText);
+
+				for (let j in json_termine) {
 					json_termine[j].DATUM = new Date(json_termine[j].DATUM);
-					if(json_termine[j].DATUM.getDate()==tagZelle) {
-						termine_relevant[termine_relevant.length] = json_termine[j];
-					}
 				}
-			this.calculateDays(month, year, json_termine);
-		}*/
+				ref.calculateDays(month, year, json_termine);
+			}
+		}
 		
-		let data = [
+		/*let data = [
 			{
 				"DATUM":"2018-09-08",
 				"NR":1,
@@ -100,16 +102,47 @@ class Grid extends React.Component {
 				"KATEGORIE":"team",
 				"LIGA":"other_league"
 			}
+		];*/
+
+		/*let data = [
+			{
+				"DATUM":"2018-09-08",
+				"NR":1,
+				"BEGINN":"08:30:00",
+				"KATEGORIE":"team",
+				"LIGA":"Werkstatt"
+			},
+			{
+				"DATUM":"2018-09-28",
+				"NR":1,
+				"BEGINN":"10:30:00",
+				"KATEGORIE":"team",
+				"LIGA":"Bewerbungs- gespräch"
+			},
+			{
+				"DATUM":"2018-09-17",
+				"NR":1,
+				"BEGINN":"17:00:00",
+				"KATEGORIE":"team",
+				"LIGA":"Fußball"
+			},
+			{
+				"DATUM":"2018-09-17",
+				"NR":2,
+				"BEGINN":"19:00:00",
+				"KATEGORIE":"team",
+				"LIGA":"Geburtstag Anna"
+			}
 		];
 
-		this.calculateDays(month, year, data);
+		this.calculateDays(month, year, data);*/
     }
 	
 	render() {
 		if(this.state.days.length==0) {
 			return;
 		}
-		const monthNames = new Array('Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember');
+		const monthNames = new Array('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember');
 		const wochentage = new Array('Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag');
 		let rowCount = new Array();
 		for (let x=0; x<this.state.days.length; x++) {
@@ -130,12 +163,12 @@ class Grid extends React.Component {
 					<td className='tbl_title'><a className='tbl_move' onClick={this.nextMonth.bind(this)} > &raquo;</a></td>
 				</tr>
 				<tr>
-				{wochentage.map((wochentag) => (
-					<td className='tbl_head tbl_zelle'>{wochentag}</td>
+				{wochentage.map((wochentag, i) => (
+					<td key={i} className='tbl_head tbl_zelle'>{wochentag}</td>
 				))}
 				</tr>
 				{rowCount.map((rowNum) => (
-					<Row days={this.state.days[rowNum]} month={this.state.month} year={this.state.year} 
+					<Row key={rowNum} days={this.state.days[rowNum]} month={this.state.month} year={this.state.year} 
 						entries={this.state.dayData[rowNum]} onSelectedItem={this.onSelectedItem.bind(this)}/>
 				))}
 			</tbody>

@@ -17,8 +17,8 @@ class Row extends React.Component {
 
 		return (
 			<tr>
-				{days.map((day) => (
-					<Cell dayCell={day} month={month} year={year} entriesCell={entries.filter(e => new Date(e.DATUM).getDate()==day)} onSelectedItem={this.onSelectedItem.bind(this)}/>
+				{days.map((day, i) => (
+					<Cell key={i} dayCell={day} month={month} year={year} entriesCell={entries.filter(e => new Date(e.DATUM).getDate()==day)} onSelectedItem={this.onSelectedItem.bind(this)}/>
 				))}
 			</tr>
 		)

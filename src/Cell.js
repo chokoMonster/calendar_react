@@ -39,8 +39,8 @@ class Cell extends React.Component {
 		return (
             <td className={'tbl_tage tbl_zelle '+style_cell} id='zelle+{day}'>
 				<p>{day}</p>
-				{entries.map((entry) => (
-					<Item entriesItem={entry} onSelectedItem={this.onSelectedItem.bind(this)}/>
+				{entries.map((entry, i) => (
+					<Item key={i} entriesItem={entry} onSelectedItem={this.onSelectedItem.bind(this)}/>
 				))}
 			</td>
 		)

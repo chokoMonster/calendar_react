@@ -1,6 +1,7 @@
 import React from 'react'
 import CSSModules from 'react-css-modules';
 import Grid from './Grid'
+import Header from './Header'
 import style from './kalender.css';
 import EntriePopup from './EntriePopup';
 
@@ -29,6 +30,7 @@ class App extends React.Component {
     return (
       <div>
         <div>
+          <Header/>
 					<Grid onSelectedItem={this.showEntrie.bind(this)}/>
         </div>
 				{this.state.showEntrie ? <EntriePopup entriePopup={this.state.selectedEntrie} closePopup={this.togglePopup.bind(this)} /> : null}

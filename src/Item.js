@@ -11,10 +11,9 @@ class Item extends React.Component {
 
 	render() {
 		const eintrag = this.props.entriesItem;
-		const itemId = 'eintrag_' + eintrag.DATUM + '_' + eintrag.NR;
 		return (
 			<div>
-				<p className='tbl_eintrag' id={itemId} onClick={this.onSelectedItem.bind(this)} /*onClick={this.togglePopup.bind(this)} onClick={zeigeEintrag(this.id)}*/>
+				<p className='tbl_eintrag' onClick={this.onSelectedItem.bind(this)} /*onClick={this.togglePopup.bind(this)} onClick={zeigeEintrag(this.id)}*/>
 					{(eintrag.BEGINN).substring(0,5)} {eintrag.LIGA}
 				</p>
 			</div>
